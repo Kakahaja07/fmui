@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FMUI
 
-## Getting Started
+Free Modern UI: a collection of 50 planned React components you copy into your own project and own. This repository contains the website ([fmui.dev](https://fmui.dev)) and the component source.
 
-First, run the development server:
+## Status
+
+- 20 components are available with live demos, documentation, and source code.
+- 4 more are in preview: Progress Ring, Animated Counter, Morphing Dialog, and Floating Dock.
+- 26 are listed as coming soon. They have catalog entries only: no source, no install command, and `noindex`.
+- Blocks (full page sections) are planned; the Blocks page shows the plan, not downloads.
+- The shadcn registry endpoint (`fmui.dev/r/*.json`) is not live yet. Install commands on the site are labelled as illustrative; copy the source from any component page instead.
+
+## Stack
+
+Next.js 16 (App Router, Cache Components), React 19, TypeScript (strict), Tailwind CSS v4, Radix UI, cmdk, Motion, Shiki, Hugeicons, and next-themes. Tests run with Vitest and Testing Library.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Other scripts:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm build      # production build
+pnpm typecheck  # next typegen + tsc
+pnpm lint
+pnpm test
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project layout
 
-## Learn More
+```
+src/
+  app/                  routes: /, /components, /components/[slug], /blocks, /showcase, /roadmap, /changelog, /about
+  components/
+    ui/                 shared primitives (buttons, dialogs, menus, cards)
+    layout/             header, footer, frame, mobile nav, docs sidebar, table of contents, search (Ctrl+K)
+    home/ gallery/ docs/ blocks/ roadmap/   page sections and documentation widgets
+    demos/              one demo per implemented component, lazy-loaded, plus card layout sizes
+  registry/components/  the copyable component source, one folder per component
+  content/components/   usage, variants, props, and accessibility notes per component
+  data/                 typed catalog (components.ts is the single source of truth), categories, blocks, roadmap, changelog
+  lib/                  catalog queries, source reader, Shiki highlighter, site config
+```
 
-To learn more about Next.js, take a look at the following resources:
+Every component page reads its Code tab from the real file listed in `sourceFiles`. A missing file fails the build and the unit tests, so the site never shows code that does not exist.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Adding a component
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Create `src/registry/components/<slug>/<slug>.tsx` (client component, Tailwind classes, `cn` from `@/lib/utils`).
+2. Add `src/components/demos/<slug>-demo.tsx`, register it in `src/components/demos/index.ts`, and give it a card width in `demoLayout`.
+3. Add the docs entry in `src/content/components/index.ts`.
+4. Change the catalog entry in `src/data/components.ts` from `planned(...)` to `available(...)`.
+5. Run `pnpm test` to verify the catalog invariants, then `pnpm build`.
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Issues and pull requests are welcome. For a new component, open an issue first to agree on scope, then send a pull request that includes the component, its demo, and its documentation entry.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+[MIT](LICENSE) © 2026 Prashant Sharma
+
+Fonts in `public/fonts` are licensed separately under the SIL Open Font License 1.1: [Geomini](https://github.com/fontbob/geomini) (headings) and [Uncut Sans](https://uncut.wtf/) by Kasper Nordkvist (body text).
+
+Developed by Prashant Sharma ([@Prsnt50](https://x.com/Prsnt50)).
