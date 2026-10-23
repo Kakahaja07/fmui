@@ -1,8 +1,9 @@
 export const siteConfig = {
   name: "FMUI",
-  title: "FMUI — Free Modern UI Components",
+  /** Homepage and default title: under 60 characters, keyword first, brand last. */
+  title: "Free Shadcn UI Components for React & Tailwind CSS | FMUI",
   description:
-    "A thoughtfully crafted collection of 50 free React components for modern interfaces. Copy, customize, and own the code.",
+    "Free, open-source shadcn-compatible React components built with Tailwind CSS v4 and TypeScript. Live demos, copyable source, and docs. MIT licensed.",
   /** Public origin plus any base path, set per deployment (e.g. https://kakahaja07.github.io/fmui). */
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://fmui.dev")
     .replace(/\/+$/, "")

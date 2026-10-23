@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Search02Icon } from "@hugeicons/core-free-icons";
 import { Button, ButtonArrow } from "@/components/ui/button";
 import { FrameSection } from "@/components/layout/frame";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (

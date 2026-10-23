@@ -1,31 +1,42 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { GridViewIcon } from "@hugeicons/core-free-icons";
-import { allComponents, statusCounts } from "@/lib/component-catalog";
-import { absoluteUrl } from "@/lib/metadata";
-import { ComponentBrowser } from "@/components/gallery/component-browser";
+import { allComponents, availableComponents, statusCounts } from "@/lib/component-catalog";
+import { absoluteUrl, siteConfig } from "@/lib/metadata";
+import { jsonLd, pageMetadata } from "@/lib/seo";
+import { ComponentBrowser, ComponentBrowserStatic } from "@/components/gallery/component-browser";
 import { PageHeader } from "@/components/layout/page-header";
 import { FrameSection } from "@/components/layout/frame";
 
-export const metadata: Metadata = {
-  title: "Components",
-  description: `Browse ${allComponents.length} free React components for modern interfaces. Search by name, filter by category, and copy the source.`,
-  alternates: { canonical: absoluteUrl("/components") },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Free React UI Components, Shadcn Compatible",
+  description: `Browse ${availableComponents.length} free React components with live demos: command menu, multi-select, stepper, pricing card, AI chat, prompt input, and more. Built with Tailwind CSS.`,
+  path: "/components",
+});
 
-function BrowserFallback() {
-  return (
-    <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="h-[300px] animate-pulse rounded-[14px] border border-border bg-surface" />
-      ))}
-    </div>
-  );
-}
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "FMUI components",
+  url: absoluteUrl("/components"),
+  description: `${allComponents.length} planned React components, ${availableComponents.length} with live demos and source.`,
+  isPartOf: { "@id": `${siteConfig.url}/#website` },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: availableComponents.length,
+    itemListElement: availableComponents.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: c.name,
+      url: absoluteUrl(`/components/${c.slug}`),
+    })),
+  },
+};
 
 export default function ComponentsPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(structuredData)} />
       <PageHeader
         icon={GridViewIcon}
         eyebrow="Library"
@@ -47,7 +58,8 @@ export default function ComponentsPage() {
         }
       />
       <FrameSection className="pb-16 pt-6" aria-label="Component catalog">
-        <Suspense fallback={<BrowserFallback />}>
+        {/* The fallback is the full default grid, so the static HTML lists every component. */}
+        <Suspense fallback={<ComponentBrowserStatic />}>
           <ComponentBrowser />
         </Suspense>
       </FrameSection>

@@ -58,8 +58,8 @@ export function Hero() {
         Beautiful components. Built for your next idea.
       </h1>
       <p className="mt-4 max-w-[540px] text-pretty text-base leading-[1.6] text-muted-foreground md:text-[17px]">
-        A thoughtfully crafted collection of React components for modern interfaces. Free, customizable, and ready
-        to make your own.
+        A thoughtfully crafted collection of free, shadcn-compatible React components built with Tailwind CSS.
+        Customizable, open source, and ready to make your own.
       </p>
 
       <div className="mt-6 flex flex-wrap justify-center gap-2.5">

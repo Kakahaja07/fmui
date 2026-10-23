@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { IconSvgElement } from "@hugeicons/react";
 import { Add01Icon, News01Icon, RefreshIcon, Wrench01Icon } from "@hugeicons/core-free-icons";
-import { absoluteUrl } from "@/lib/metadata";
 import { changelog, type ChangelogEntry } from "@/data/changelog";
 import { formatDate } from "@/lib/utils";
 import { PageHeader } from "@/components/layout/page-header";
 import { FrameSection } from "@/components/layout/frame";
 
-export const metadata: Metadata = {
-  title: "Changelog",
-  description: "Release history for FMUI components and the website.",
-  alternates: { canonical: absoluteUrl("/changelog") },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Changelog: New React Components and Releases",
+  description:
+    "Every FMUI release: new shadcn-compatible React components, previews, fixes, and site updates, with dates and full details for each version.",
+  path: "/changelog",
+});
 
 const typeMeta: Record<ChangelogEntry["changes"][number]["type"], { label: string; icon: IconSvgElement; className: string }> = {
   added: { label: "Added", icon: Add01Icon, className: "text-success" },

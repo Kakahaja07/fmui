@@ -86,6 +86,6 @@ Issues and pull requests are welcome. For a new component, open an issue first t
 
 [MIT](LICENSE) © 2026 Prashant Sharma
 
-Fonts in `public/fonts` are licensed separately under the SIL Open Font License 1.1: [Geomini](https://github.com/fontbob/geomini) (headings) and [Uncut Sans](https://uncut.wtf/) by Kasper Nordkvist (body text).
+Fonts in `public/fonts` are licensed separately under the SIL Open Font License 1.1: [Geomini](https://github.com/fontbob/geomini) (headings) and [Uncut Sans](https://uncut.wtf/) by Kasper Nordkvist (body text). `src/assets/og-fonts` holds static single-weight instances of the same fonts, used only to render social preview images at build time, under the same license.
 
 Developed by Prashant Sharma ([@Prsnt50](https://x.com/Prsnt50)).

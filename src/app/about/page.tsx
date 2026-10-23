@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { IconSvgElement } from "@hugeicons/react";
@@ -10,17 +11,19 @@ import {
   StarsIcon,
   UserGroupIcon,
 } from "@hugeicons/core-free-icons";
-import { absoluteUrl, siteConfig } from "@/lib/metadata";
+import { siteConfig } from "@/lib/metadata";
 import { allComponents, availableComponents } from "@/lib/component-catalog";
 import { Button, ButtonArrow } from "@/components/ui/button";
 import { PageHeader } from "@/components/layout/page-header";
 import { FrameSection } from "@/components/layout/frame";
 
-export const metadata: Metadata = {
-  title: "About",
-  description: "What FMUI is, how the components are built, and what is planned next.",
-  alternates: { canonical: absoluteUrl("/about") },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "About FMUI: Free Open-Source React Component Library",
+  absoluteTitle: true,
+  description:
+    "FMUI is a free, MIT-licensed library of shadcn-compatible React components for Tailwind CSS. Learn how it is built, its principles, and how to contribute.",
+  path: "/about",
+});
 
 function Block({ id, title, icon, children }: { id: string; title: string; icon: IconSvgElement; children: React.ReactNode }) {
   return (

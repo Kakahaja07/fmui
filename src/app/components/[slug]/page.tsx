@@ -21,6 +21,8 @@ import { allComponents, getComponent, getRelatedComponents, statusLabel } from "
 import { categoryById } from "@/data/categories";
 import { componentDocs } from "@/content/components";
 import { absoluteUrl, siteConfig } from "@/lib/metadata";
+import { authorLd, jsonLd, pageMetadata } from "@/lib/seo";
+import type { FMUIComponent } from "@/types/component";
 import { readSourceFiles } from "@/lib/source";
 import { highlight } from "@/lib/highlight";
 import { formatDate } from "@/lib/utils";
@@ -48,19 +50,38 @@ export async function generateMetadata({ params }: PageProps<"/components/[slug]
   const { slug } = await params;
   const component = getComponent(slug);
   if (!component) return {};
+  return componentSeo(component);
+}
+
+/** Longest title variant that fits Google's ~60 character display, brand included. */
+function componentTitle(name: string, soon: boolean) {
+  const brand = ` | ${siteConfig.name}`.length;
+  const options = soon
+    ? [`${name} for React (Coming Soon)`, `${name} (Coming Soon)`]
+    : [`${name} Component for React & Tailwind CSS`, `${name} Component for React`, `${name} for React`];
+  return options.find((t) => t.length + brand <= 60) ?? options[options.length - 1];
+}
+
+/** Trims to a word boundary at or under `max` characters. */
+function clamp(text: string, max = 160) {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(" "))}.`;
+}
+
+function componentSeo(component: FMUIComponent): Metadata {
   const soon = component.status === "coming-soon";
-  return {
-    title: `${component.name} - ${categoryById[component.category].name}`,
-    description: component.description,
-    alternates: { canonical: absoluteUrl(`/components/${slug}`) },
-    robots: soon ? { index: false, follow: true } : undefined,
-    openGraph: {
-      title: `${component.name} | ${siteConfig.name}`,
-      description: component.description,
-      url: absoluteUrl(`/components/${slug}`),
-      type: "article",
-    },
-  };
+  const description = soon
+    ? clamp(`${component.description} Planned for FMUI's free React component library; follow progress on the roadmap.`)
+    : clamp(`${component.description} Free shadcn-compatible React component with Tailwind CSS, a live demo, TypeScript source, and props.`);
+  return pageMetadata({
+    title: componentTitle(component.name, soon),
+    description,
+    path: `/components/${component.slug}`,
+    type: "article",
+    noindex: soon,
+    image: { path: `/components/${component.slug}/og.png`, alt: `${component.name}: ${component.description}` },
+  });
 }
 
 function Section({
@@ -119,19 +140,45 @@ export default async function ComponentPage({ params }: PageProps<"/components/[
         { id: "related", label: "Related" },
       ];
 
-  const breadcrumbLd = {
+  const pageUrl = absoluteUrl(`/components/${slug}`);
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-      { "@type": "ListItem", position: 2, name: "Components", item: absoluteUrl("/components") },
-      { "@type": "ListItem", position: 3, name: component.name, item: absoluteUrl(`/components/${slug}`) },
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Components", item: absoluteUrl("/components") },
+          { "@type": "ListItem", position: 3, name: component.name, item: pageUrl },
+        ],
+      },
+      // Source-code markup only for components that actually have source.
+      ...(implemented && siteConfig.githubRepo
+        ? [
+            {
+              "@type": "SoftwareSourceCode",
+              name: `${component.name} React component`,
+              description: component.description,
+              url: pageUrl,
+              codeRepository: `https://github.com/${siteConfig.githubRepo}/blob/main/src/registry/components/${component.sourceFiles[0]}`,
+              programmingLanguage: "TypeScript",
+              runtimePlatform: "React",
+              keywords: component.tags.join(", "),
+              license: "https://opensource.org/licenses/MIT",
+              isAccessibleForFree: true,
+              dateCreated: component.createdAt,
+              dateModified: component.updatedAt,
+              author: authorLd,
+              isPartOf: { "@id": `${siteConfig.url}/#website` },
+            },
+          ]
+        : []),
     ],
   };
 
   return (
     <div className="container-site" data-frame="wide">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(structuredData)} />
       <div className="flex gap-6 xl:gap-8">
         <aside className="sticky top-(--header-height) hidden h-[calc(100vh-var(--header-height))] w-[240px] shrink-0 py-6 lg:block">
           <Suspense fallback={<div className="h-8 w-full animate-pulse rounded-[8px] bg-accent" />}>

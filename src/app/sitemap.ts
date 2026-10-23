@@ -1,11 +1,14 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/metadata";
 import { availableComponents } from "@/lib/component-catalog";
+import { showcase } from "@/data/showcase";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["/", "/components", "/blocks", "/showcase", "/roadmap", "/changelog", "/about"].map((path) => ({
+  // Showcase stays out (and noindex) until it has real entries.
+  const pages = ["/", "/components", "/blocks", "/roadmap", "/changelog", "/about", ...(showcase.length ? ["/showcase"] : [])];
+  const staticRoutes = pages.map((path) => ({
     url: absoluteUrl(path),
     lastModified: new Date("2026-10-23"),
     changeFrequency: "weekly" as const,

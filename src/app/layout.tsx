@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import { siteConfig } from "@/lib/metadata";
+import { absoluteUrl, siteConfig } from "@/lib/metadata";
 import { Providers } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -23,17 +23,28 @@ const uncutSans = localFont({
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(`${siteConfig.url}/`),
   title: { default: siteConfig.title, template: `%s | ${siteConfig.name}` },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.author.name, url: siteConfig.author.x }],
+  creator: siteConfig.author.name,
+  category: "technology",
+  icons: { apple: absoluteUrl("/apple-touch-icon.png") },
+  // Canonical and og:url are set per page (see pageMetadata), never inherited.
   openGraph: {
     type: "website",
     siteName: siteConfig.name,
+    locale: "en_US",
     title: siteConfig.title,
     description: siteConfig.description,
-    url: siteConfig.url,
   },
-  twitter: { card: "summary_large_image", title: siteConfig.title, description: siteConfig.description },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    creator: siteConfig.author.handle,
+  },
 };
 
 export const viewport: Viewport = {

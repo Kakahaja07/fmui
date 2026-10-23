@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { CubeIcon } from "@hugeicons/core-free-icons";
-import { absoluteUrl } from "@/lib/metadata";
 import { blockGroups, plannedBlockCount } from "@/data/blocks";
 import { PageHeader } from "@/components/layout/page-header";
 import { FrameSection } from "@/components/layout/frame";
 import { BlocksBrowser } from "@/components/blocks/blocks-browser";
 
-export const metadata: Metadata = {
-  title: "Blocks",
-  description: "Page-level sections built from FMUI components: app shells, dashboards, AI chat, pricing, and more. Planned, not yet published.",
-  alternates: { canonical: absoluteUrl("/blocks") },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Shadcn Blocks for React & Tailwind (Coming Soon)",
+  description: `Planned shadcn-compatible blocks for React and Tailwind CSS: app shells, dashboards, AI chat, pricing, onboarding, and heroes. ${plannedBlockCount} planned, none published yet.`,
+  path: "/blocks",
+});
 
 export default function BlocksPage() {
   return (

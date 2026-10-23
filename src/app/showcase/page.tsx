@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { PackageOpenIcon, StarsIcon } from "@hugeicons/core-free-icons";
-import { absoluteUrl } from "@/lib/metadata";
 import { showcase } from "@/data/showcase";
 import { Badge } from "@/components/ui/badge";
 import { Button, ButtonArrow } from "@/components/ui/button";
 import { PageHeader } from "@/components/layout/page-header";
 import { FrameSection } from "@/components/layout/frame";
 
-export const metadata: Metadata = {
-  title: "Showcase",
-  description: "Projects built with FMUI components.",
-  alternates: { canonical: absoluteUrl("/showcase") },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Showcase: Projects Built With FMUI",
+  description:
+    "Websites and products built with FMUI's free React components. Entries are verified by hand, and the showcase opens for submissions soon.",
+  path: "/showcase",
+  // Empty pages are thin content; index the showcase once it has real entries.
+  noindex: showcase.length === 0,
+});
 
 export default function ShowcasePage() {
   return (

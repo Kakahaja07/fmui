@@ -7,6 +7,7 @@ import { Search01Icon, SearchRemoveIcon, Sorting01Icon } from "@hugeicons/core-f
 import { categories, isCategory } from "@/data/categories";
 import { allComponents, queryComponents, categoryCounts, type SortKey } from "@/lib/component-catalog";
 import { cn } from "@/lib/utils";
+import type { ComponentCategory } from "@/types/component";
 import { ComponentCard } from "@/components/gallery/component-card";
 import {
   DropdownMenu,
@@ -43,6 +44,31 @@ export function ComponentBrowser() {
     [params, pathname, router],
   );
 
+  return <BrowserView q={q} category={category} sort={sort} setParams={setParams} />;
+}
+
+const noop = () => {};
+
+/**
+ * The default view (all components, newest first) rendered without reading the
+ * URL. Used as the Suspense fallback so the static HTML that crawlers and first
+ * paint receive already contains every card and link; filters work after hydration.
+ */
+export function ComponentBrowserStatic() {
+  return <BrowserView q="" category="all" sort="newest" setParams={noop} />;
+}
+
+function BrowserView({
+  q,
+  category,
+  sort,
+  setParams,
+}: {
+  q: string;
+  category: ComponentCategory | "all";
+  sort: SortKey;
+  setParams: (patch: Record<string, string | null>) => void;
+}) {
   const deferredQ = useDeferredValue(q);
   const results = useMemo(() => queryComponents({ q: deferredQ, category, sort }), [deferredQ, category, sort]);
 
