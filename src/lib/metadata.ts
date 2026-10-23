@@ -4,7 +4,10 @@ export const siteConfig = {
   description:
     "A thoughtfully crafted collection of 50 free React components for modern interfaces. Copy, customize, and own the code.",
   /** Public origin plus any base path, set per deployment (e.g. https://kakahaja07.github.io/fmui). */
-  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://fmui.dev").replace(/\/+$/, ""),
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://fmui.dev")
+    .replace(/\/+$/, "")
+    // GitHub Pages reports http:// until "Enforce HTTPS" is on; canonical URLs should always be https.
+    .replace(/^http:\/\/(?!localhost|127\.0\.0\.1)/, "https://"),
   /** Public GitHub repository as "owner/name". Drives the header link, live star count, and hero CTA. */
   githubRepo: "Kakahaja07/fmui" as string | null,
   author: {
