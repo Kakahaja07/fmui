@@ -30,6 +30,28 @@ pnpm lint
 pnpm test
 ```
 
+## Deployment (GitHub Pages)
+
+Every push to `main` builds a static export and deploys it with `.github/workflows/deploy.yml`.
+
+1. In the repository, open **Settings > Pages** and set **Source** to **GitHub Actions** (one time).
+2. Push to `main`, or run the workflow from the **Actions** tab. The site is served at `https://<user>.github.io/fmui/`.
+
+To try the static export locally:
+
+```bash
+GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/fmui pnpm build   # writes ./out
+```
+
+### Custom domain
+
+1. In **Settings > Pages > Custom domain**, enter your domain and save.
+2. At your DNS provider, add records that point to GitHub Pages:
+   - Subdomain (for example `ui.example.com`): a `CNAME` record to `<user>.github.io`.
+   - Apex domain (for example `example.com`): `A` records to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, and `185.199.111.153`.
+3. When the DNS check passes, enable **Enforce HTTPS**.
+4. Re-run the deploy workflow. The base path switches to `/` and canonical URLs use the new domain automatically.
+
 ## Project layout
 
 ```

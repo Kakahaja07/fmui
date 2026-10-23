@@ -1,5 +1,4 @@
 import "server-only";
-import { cacheLife } from "next/cache";
 import { createHighlighter, type Highlighter } from "shiki";
 
 let highlighterPromise: Promise<Highlighter> | null = null;
@@ -12,14 +11,8 @@ function getHighlighter() {
   return highlighterPromise;
 }
 
-/**
- * Highlighted HTML for a code string. Cached by (code, lang) so the output is
- * part of the static shell; Shiki's internal timers would otherwise mark the
- * render as request-time.
- */
+/** Highlighted HTML for a code string. Runs at build time; pages are statically generated. */
 export async function highlight(code: string, lang: "tsx" | "ts" | "bash" | "json" = "tsx") {
-  "use cache";
-  cacheLife("max");
   const highlighter = await getHighlighter();
   return highlighter.codeToHtml(code, {
     lang,

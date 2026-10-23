@@ -1,17 +1,15 @@
 import "server-only";
-import { cacheLife } from "next/cache";
 
 /**
- * Real star count for a public repository, cached for an hour so the header
- * stays part of the static shell. Returns null on any failure: the link still
- * renders, just without a number. Never returns a made-up value.
+ * Real star count for a public repository, fetched once at build time so the
+ * header stays static. Returns null on any failure: the link still renders,
+ * just without a number. Never returns a made-up value.
  */
 export async function getGithubStars(repo: string): Promise<number | null> {
-  "use cache";
-  cacheLife("hours");
   try {
     const res = await fetch(`https://api.github.com/repos/${repo}`, {
       headers: { Accept: "application/vnd.github+json" },
+      cache: "force-cache",
     });
     if (!res.ok) return null;
     const data = (await res.json()) as { stargazers_count?: unknown };

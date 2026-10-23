@@ -41,6 +41,9 @@ export function generateStaticParams() {
   return allComponents.map((c) => ({ slug: c.slug }));
 }
 
+/** Only catalog slugs exist; anything else is a 404 (also required for static export). */
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }: PageProps<"/components/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const component = getComponent(slug);
