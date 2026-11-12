@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ToastStack, type StackNotification } from "@/registry/components/toast-stack/toast-stack";
+import { ToastStack, type StackNotification } from "@/registry/components/toast-notification/toast-notification";
 import { useDemoLoop } from "@/components/demos/use-demo-loop";
 
 const FEED: Omit<StackNotification, "id">[] = [

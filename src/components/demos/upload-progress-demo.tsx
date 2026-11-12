@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { UploadCard } from "@/registry/components/upload-card/upload-card";
+import { UploadCard } from "@/registry/components/upload-progress/upload-progress";
 import { useDemoLoop } from "@/components/demos/use-demo-loop";
 import { cn } from "@/lib/utils";
 

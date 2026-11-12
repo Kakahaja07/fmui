@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DeployButton, type DeployStatus } from "@/registry/components/deploy-button/deploy-button";
+import { DeployButton, type DeployStatus } from "@/registry/components/progress-button/progress-button";
 import { useDemoLoop } from "@/components/demos/use-demo-loop";
 
 export default function DeployButtonDemo() {

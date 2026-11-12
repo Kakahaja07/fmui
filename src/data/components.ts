@@ -32,6 +32,20 @@ function preview(seed: Seed): FMUIComponent {
   return { ...available(seed, R4), status: "preview" };
 }
 
+/**
+ * Slugs renamed to the phrase people actually search for. Old URLs stay
+ * reachable and permanently redirect to the new page.
+ */
+export const slugRedirects: Record<string, string> = {
+  "animated-counter": "animated-number-counter",
+  "hold-to-confirm": "press-and-hold-button",
+  "toast-stack": "toast-notification",
+  "status-pulse": "status-indicator",
+  "deploy-button": "progress-button",
+  "focus-timer": "pomodoro-timer",
+  "upload-card": "upload-progress",
+};
+
 /** Homepage featured order: a spread across navigation, AI, animation, and data display. */
 export const featuredOrder = [
   "floating-dock",
@@ -39,7 +53,7 @@ export const featuredOrder = [
   "morphing-dialog",
   "metric-card",
   "ai-thinking-indicator",
-  "animated-counter",
+  "animated-number-counter",
 ] as const;
 
 export const components: FMUIComponent[] = [
@@ -444,8 +458,8 @@ export const components: FMUIComponent[] = [
 
   // Motion & Feedback (12)
   preview({
-    slug: "animated-counter",
-    name: "Animated Counter",
+    slug: "animated-number-counter",
+    name: "Animated Number Counter",
     description: "A number that counts to its target with easing and formatting.",
     category: "motion-feedback",
     tags: ["counter", "number", "animation", "stats"],
@@ -461,16 +475,16 @@ export const components: FMUIComponent[] = [
     dependencies: ["motion"],
   }),
   latest({
-    slug: "hold-to-confirm",
-    name: "Hold to Confirm",
+    slug: "press-and-hold-button",
+    name: "Press and Hold Button",
     description: "A destructive button that requires a press-and-hold to fire.",
     category: "motion-feedback",
     tags: ["button", "confirm", "destructive", "hold"],
     dependencies: [],
   }),
   latest({
-    slug: "toast-stack",
-    name: "Toast Stack",
+    slug: "toast-notification",
+    name: "Toast Notification",
     description: "Notification cards that drop in on top and push older ones out.",
     category: "motion-feedback",
     tags: ["toast", "notification", "stack", "feed"],
@@ -501,8 +515,8 @@ export const components: FMUIComponent[] = [
     dependencies: ["motion"],
   }),
   latest({
-    slug: "status-pulse",
-    name: "Status Pulse",
+    slug: "status-indicator",
+    name: "Status Indicator",
     description: "A live status indicator with a soft pulsing halo.",
     category: "motion-feedback",
     tags: ["status", "pulse", "indicator", "live"],
@@ -510,31 +524,31 @@ export const components: FMUIComponent[] = [
   }),
 
   latest({
-    slug: "focus-timer",
-    name: "Focus Timer",
+    slug: "pomodoro-timer",
+    name: "Pomodoro Timer",
     description: "A countdown ring with rolling digits that pauses and resumes on click.",
     category: "motion-feedback",
     tags: ["timer", "countdown", "pomodoro", "progress"],
     dependencies: [],
-    sourceFiles: ["focus-timer/focus-timer.tsx", "rolling-number/rolling-number.tsx"],
+    sourceFiles: ["pomodoro-timer/pomodoro-timer.tsx", "rolling-number/rolling-number.tsx"],
   }),
   latest({
-    slug: "upload-card",
-    name: "Upload Card",
+    slug: "upload-progress",
+    name: "Upload Progress",
     description: "A file upload tile with a progress bar, rolling percent, and a check.",
     category: "motion-feedback",
     tags: ["upload", "progress", "file", "status"],
     dependencies: [],
-    sourceFiles: ["upload-card/upload-card.tsx", "rolling-number/rolling-number.tsx"],
+    sourceFiles: ["upload-progress/upload-progress.tsx", "rolling-number/rolling-number.tsx"],
   }),
   latest({
-    slug: "deploy-button",
-    name: "Deploy Button",
+    slug: "progress-button",
+    name: "Progress Button",
     description: "A button that fills with deploy progress and settles into a Live pill.",
     category: "motion-feedback",
     tags: ["button", "progress", "deploy", "status"],
     dependencies: [],
-    sourceFiles: ["deploy-button/deploy-button.tsx", "rolling-number/rolling-number.tsx"],
+    sourceFiles: ["progress-button/progress-button.tsx", "rolling-number/rolling-number.tsx"],
   }),
   latest({
     slug: "rolling-number",

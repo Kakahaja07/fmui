@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { HoldToConfirm } from "@/registry/components/hold-to-confirm/hold-to-confirm";
+import { HoldToConfirm } from "@/registry/components/press-and-hold-button/press-and-hold-button";
 
 export default function HoldToConfirmDemo() {
   const [deletes, setDeletes] = useState(0);

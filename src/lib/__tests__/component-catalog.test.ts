@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { components, featuredOrder } from "@/data/components";
+import { components, featuredOrder, slugRedirects } from "@/data/components";
 import { categories } from "@/data/categories";
 import { componentDocs } from "@/content/components";
 import { demoLayout, demoRegistry } from "@/components/demos";
@@ -66,6 +66,14 @@ describe("component catalog", () => {
       }
       expect(c.previewId && demoRegistry[c.previewId], c.slug).toBeTruthy();
       expect(componentDocs[c.slug], c.slug).toBeDefined();
+    }
+  });
+
+  it("redirects every renamed slug to a live component and never shadows a current one", () => {
+    const slugs = new Set(components.map((c) => c.slug));
+    for (const [from, to] of Object.entries(slugRedirects)) {
+      expect(slugs.has(from), from).toBe(false);
+      expect(slugs.has(to), to).toBe(true);
     }
   });
 

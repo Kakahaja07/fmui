@@ -453,8 +453,8 @@ import { Home01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
       "Shimmer runs only when motion is allowed.",
     ],
   },
-  "animated-counter": {
-    usage: `import { AnimatedCounter } from "@/components/fmui/animated-counter";
+  "animated-number-counter": {
+    usage: `import { AnimatedCounter } from "@/components/fmui/animated-number-counter";
 
 <AnimatedCounter value={downloads} duration={900} />`,
     variants: [{ name: "Formatted", description: "Pass format to render currency, percentages, or compact numbers." }],
@@ -649,8 +649,8 @@ import { Home01Icon, Mail01Icon } from "@hugeicons/core-free-icons";
       "The line morph is skipped for users who prefer reduced motion.",
     ],
   },
-  "focus-timer": {
-    usage: `import { FocusTimer } from "@/components/fmui/focus-timer";
+  "pomodoro-timer": {
+    usage: `import { FocusTimer } from "@/components/fmui/pomodoro-timer";
 
 <FocusTimer duration={25 * 60} defaultRemaining={11 * 60 + 9} label="Focus" />`,
     variants: [
@@ -832,8 +832,8 @@ import { Sun03Icon } from "@hugeicons/core-free-icons";
       "The badge is hidden from screen readers while monthly is selected.",
     ],
   },
-  "toast-stack": {
-    usage: `import { ToastStack } from "@/components/fmui/toast-stack";
+  "toast-notification": {
+    usage: `import { ToastStack } from "@/components/fmui/toast-notification";
 
 <ToastStack
   notifications={[
@@ -856,8 +856,8 @@ import { Sun03Icon } from "@hugeicons/core-free-icons";
       "Movement is dropped under prefers-reduced-motion; cards still fade in and out.",
     ],
   },
-  "upload-card": {
-    usage: `import { UploadCard } from "@/components/fmui/upload-card";
+  "upload-progress": {
+    usage: `import { UploadCard } from "@/components/fmui/upload-progress";
 
 <UploadCard fileName="hero-v3.fig" progress={progress} />`,
     variants: [
@@ -877,8 +877,8 @@ import { Sun03Icon } from "@hugeicons/core-free-icons";
       "The bar and check pop skip motion under prefers-reduced-motion.",
     ],
   },
-  "deploy-button": {
-    usage: `import { DeployButton } from "@/components/fmui/deploy-button";
+  "progress-button": {
+    usage: `import { DeployButton } from "@/components/fmui/progress-button";
 
 <DeployButton onDeploy={() => startDeploy()} />`,
     variants: [
@@ -1449,8 +1449,8 @@ const [range, setRange] = useState<DateRange>({});
         "Read-only ratings render as role=img with a label like \"Average: 4.5 out of 5\".",
       ],
     },
-    "hold-to-confirm": {
-      usage: `import { HoldToConfirm } from "@/components/fmui/hold-to-confirm";
+    "press-and-hold-button": {
+      usage: `import { HoldToConfirm } from "@/components/fmui/press-and-hold-button";
 
 <HoldToConfirm
   label="Hold to delete"
@@ -1552,8 +1552,8 @@ const [range, setRange] = useState<DateRange>({});
         "No movement at all when prefers-reduced-motion is set.",
       ],
     },
-    "status-pulse": {
-      usage: `import { StatusPulse } from "@/components/fmui/status-pulse";
+    "status-indicator": {
+      usage: `import { StatusPulse } from "@/components/fmui/status-indicator";
 
 <StatusPulse status="online" label="Operational" />
 

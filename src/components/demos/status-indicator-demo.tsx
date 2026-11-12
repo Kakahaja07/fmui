@@ -1,6 +1,6 @@
 "use client";
 
-import { StatusPulse, type PulseStatus } from "@/registry/components/status-pulse/status-pulse";
+import { StatusPulse, type PulseStatus } from "@/registry/components/status-indicator/status-indicator";
 
 const rows: { name: string; detail: string; status: PulseStatus; label: string }[] = [
   { name: "API", detail: "api.northwind.dev", status: "online", label: "Operational" },

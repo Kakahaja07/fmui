@@ -31,7 +31,7 @@ const sampleSlug: Record<ComponentCategory, string> = {
   interactive: "animated-segmented-control",
   "cards-data": "metric-card",
   "forms-inputs": "tag-input",
-  "motion-feedback": "animated-counter",
+  "motion-feedback": "animated-number-counter",
   ai: "ai-chat-bubble",
   "navigation-layout": "floating-dock",
 };

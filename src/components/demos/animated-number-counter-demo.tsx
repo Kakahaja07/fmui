@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatedCounter } from "@/registry/components/animated-counter/animated-counter";
+import { AnimatedCounter } from "@/registry/components/animated-number-counter/animated-number-counter";
 
 export default function AnimatedCounterDemo() {
   const [value, setValue] = useState(12480);

@@ -280,7 +280,7 @@ const sketches: Record<string, React.ReactNode> = {
   ),
 
   // Motion & Feedback
-  "animated-counter": (
+  "animated-number-counter": (
     <div className="flex flex-col items-center gap-1.5">
       <span className="font-heading text-[30px] font-semibold tracking-[-0.04em] text-heading tabular-nums">12,480</span>
       <Bar w="70px" className="h-[5px]" />
@@ -292,13 +292,13 @@ const sketches: Record<string, React.ReactNode> = {
       <Frame className="absolute -right-12 -top-4 w-32 shadow-float"><Bar w="60%" className="bg-heading/70" /><Bar w="90%" className="mt-2" /><Bar w="70%" className="mt-1.5" /></Frame>
     </div>
   ),
-  "hold-to-confirm": (
+  "press-and-hold-button": (
     <span className="relative flex h-9 w-36 items-center justify-center overflow-hidden rounded-[10px] border border-red-200 bg-red-50 shadow-sketch dark:border-red-900 dark:bg-red-950/40">
       <span className="absolute inset-y-0 left-0 w-[60%] bg-red-200/80 dark:bg-red-800/40" />
       <Bar w="60px" className="relative bg-red-400 dark:bg-red-400/70" />
     </span>
   ),
-  "toast-stack": (
+  "toast-notification": (
     <div className="relative h-20 w-48">
       <Frame className="absolute inset-x-4 bottom-0 h-10 opacity-50" />
       <Frame className="absolute inset-x-2 bottom-2 h-10 opacity-80" />
@@ -322,7 +322,7 @@ const sketches: Record<string, React.ReactNode> = {
       <span className="flex h-9 w-28 translate-x-1.5 -translate-y-1 items-center justify-center rounded-[10px] bg-heading shadow-sketch"><Bar w="50px" className="bg-page/60" /></span>
     </span>
   ),
-  "status-pulse": (
+  "status-indicator": (
     <span className="relative flex size-12 items-center justify-center">
       <span className="absolute inset-0 rounded-full bg-green-400/20" />
       <span className="absolute inset-2.5 rounded-full bg-green-400/30" />
@@ -432,7 +432,7 @@ const categoryDefault: Record<ComponentCategory, React.ReactNode> = {
   interactive: sketches["animated-segmented-control"],
   "cards-data": sketches["metric-card"],
   "forms-inputs": sketches["tag-input"],
-  "motion-feedback": sketches["animated-counter"],
+  "motion-feedback": sketches["animated-number-counter"],
   ai: sketches["ai-chat-bubble"],
   "navigation-layout": sketches["floating-dock"],
 };

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Suspense } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { IconSvgElement } from "@hugeicons/react";
@@ -19,6 +19,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { allComponents, getComponent, getRelatedComponents, statusLabel } from "@/lib/component-catalog";
 import { categoryById } from "@/data/categories";
+import { slugRedirects } from "@/data/components";
 import { componentDocs } from "@/content/components";
 import { absoluteUrl, siteConfig } from "@/lib/metadata";
 import { authorLd, jsonLd, pageMetadata } from "@/lib/seo";
@@ -40,14 +41,17 @@ import { AuthorCredit, AuthorXLink } from "@/components/layout/author-credit";
 import { Button, ButtonArrow } from "@/components/ui/button";
 
 export function generateStaticParams() {
-  return allComponents.map((c) => ({ slug: c.slug }));
+  return [...allComponents.map((c) => c.slug), ...Object.keys(slugRedirects)].map((slug) => ({ slug }));
 }
 
-/** Only catalog slugs exist; anything else is a 404 (also required for static export). */
+/** Only catalog slugs (and renamed ones) exist; anything else is a 404 (also required for static export). */
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: PageProps<"/components/[slug]">): Promise<Metadata> {
   const { slug } = await params;
+  const moved = slugRedirects[slug];
+  // Renamed pages only redirect; point crawlers at the new URL.
+  if (moved) return { alternates: { canonical: absoluteUrl(`/components/${moved}`) }, robots: { index: false } };
   const component = getComponent(slug);
   if (!component) return {};
   return componentSeo(component);
@@ -112,6 +116,7 @@ const inlineCode = "rounded-[5px] border border-border bg-surface px-1 py-px fon
 
 export default async function ComponentPage({ params }: PageProps<"/components/[slug]">) {
   const { slug } = await params;
+  if (slugRedirects[slug]) permanentRedirect(`/components/${slugRedirects[slug]}`);
   const component = getComponent(slug);
   if (!component) notFound();
 
