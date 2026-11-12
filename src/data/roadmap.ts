@@ -34,12 +34,16 @@ const whatsNext: RoadmapEntry = {
   status: "next",
   label: "Coming soon",
   title: "What's next",
-  summary: `${upcoming.length} more components are planned. New releases land on this timeline the moment they ship.`,
+  summary:
+    upcoming.length > 0
+      ? `${upcoming.length} more components are planned. New releases land on this timeline the moment they ship.`
+      : "Every planned component has shipped. New releases land on this timeline the moment they ship.",
   items: [
     ...categories
       .map((cat) => ({ cat, names: upcoming.filter((c) => c.category === cat.id).map((c) => c.name) }))
       .filter(({ names }) => names.length > 0)
       .map(({ cat, names }) => `${cat.name}: ${names.join(", ")}`),
+    "More components, shaped by what people ask for",
     "Blocks: full sections such as pricing, AI chat layouts, dashboards, and onboarding flows",
     "One-command installs from the shadcn-compatible registry",
     "Public GitHub repository and showcase submissions",

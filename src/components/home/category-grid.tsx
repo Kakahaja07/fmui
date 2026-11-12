@@ -10,7 +10,7 @@ import {
   ZapIcon,
 } from "@hugeicons/core-free-icons";
 import { categories } from "@/data/categories";
-import { categoryCounts, categoryLiveCounts } from "@/lib/component-catalog";
+import { allComponents, categoryCounts, categoryLiveCounts } from "@/lib/component-catalog";
 import type { ComponentCategory } from "@/types/component";
 import { cn } from "@/lib/utils";
 import { ShowcaseCardFooter, showcaseCard } from "@/components/ui/showcase-card";
@@ -41,7 +41,7 @@ export function CategoryGrid() {
     <FrameSection className="py-12 md:py-14">
       <SectionHeading
         title="Find the right component faster"
-        description="Six categories, fifty components, one consistent design language."
+        description={`Six categories, ${allComponents.length} components, one consistent design language.`}
       />
       <ul className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((cat) => (

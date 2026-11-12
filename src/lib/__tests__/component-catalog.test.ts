@@ -18,7 +18,7 @@ import {
 
 describe("component catalog", () => {
   it("reports status counts that add up to the catalog", () => {
-    expect(statusCounts).toEqual({ available: 20, preview: 4, "coming-soon": 26 });
+    expect(statusCounts).toEqual({ available: 66, preview: 4, "coming-soon": 0 });
     const live = Object.values(categoryLiveCounts).reduce((a, b) => a + b, 0);
     expect(live).toBe(statusCounts.available + statusCounts.preview);
   });
@@ -34,27 +34,27 @@ describe("component catalog", () => {
     expect(Object.keys(demoLayout).sort()).toEqual(Object.keys(demoRegistry).sort());
   });
 
-  it("contains exactly 50 components with unique slugs", () => {
-    expect(components).toHaveLength(50);
-    expect(new Set(components.map((c) => c.slug)).size).toBe(50);
+  it("contains exactly 70 components with unique slugs", () => {
+    expect(components).toHaveLength(70);
+    expect(new Set(components.map((c) => c.slug)).size).toBe(70);
   });
 
   it("matches the planned per-category counts", () => {
     const counts = Object.fromEntries(categories.map((c) => [c.id, 0]));
     for (const c of components) counts[c.category]++;
     expect(counts).toEqual({
-      interactive: 10,
-      "cards-data": 10,
-      "forms-inputs": 8,
-      "motion-feedback": 8,
-      ai: 8,
+      interactive: 15,
+      "cards-data": 18,
+      "forms-inputs": 10,
+      "motion-feedback": 12,
+      ai: 9,
       "navigation-layout": 6,
     });
   });
 
-  it("has 20 available components in the planned order", () => {
+  it("has 66 available components in the planned order", () => {
     const available = components.filter((c) => c.status === "available").map((c) => c.slug);
-    expect(available).toHaveLength(20);
+    expect(available).toHaveLength(66);
     expect(available.slice(0, 3)).toEqual(["expandable-tabs", "animated-segmented-control", "command-menu"]);
   });
 
@@ -82,7 +82,8 @@ describe("roadmap and blocks", () => {
   it("lists every coming-soon component under What's next", () => {
     const next = roadmap.find((e) => e.status === "next")!;
     const soon = components.filter((c) => c.status === "coming-soon");
-    expect(next.summary).toContain(String(soon.length));
+    if (soon.length > 0) expect(next.summary).toContain(String(soon.length));
+    else expect(next.summary).toMatch(/every planned component has shipped/i);
     for (const c of soon) expect(next.items.join(" ")).toContain(c.name);
   });
 
@@ -107,7 +108,7 @@ describe("queryComponents", () => {
 
   it("filters by category and sorts alphabetically", () => {
     const ai = queryComponents({ category: "ai", sort: "alphabetical" });
-    expect(ai).toHaveLength(8);
+    expect(ai).toHaveLength(9);
     expect(ai.map((c) => c.name)).toEqual([...ai.map((c) => c.name)].sort((a, b) => a.localeCompare(b)));
   });
 

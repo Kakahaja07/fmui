@@ -48,12 +48,14 @@ export default function ComponentsPage() {
               { label: "Available", value: statusCounts.available },
               { label: "Preview", value: statusCounts.preview },
               { label: "Coming soon", value: statusCounts["coming-soon"] },
-            ].map((s) => (
-              <div key={s.label}>
-                <dt className="text-muted-foreground">{s.label}</dt>
-                <dd className="font-heading text-2xl font-semibold tracking-[-0.03em] text-heading tabular-nums">{s.value}</dd>
-              </div>
-            ))}
+            ]
+              .filter((s) => s.value > 0)
+              .map((s) => (
+                <div key={s.label}>
+                  <dt className="text-muted-foreground">{s.label}</dt>
+                  <dd className="font-heading text-2xl font-semibold tracking-[-0.03em] text-heading tabular-nums">{s.value}</dd>
+                </div>
+              ))}
           </dl>
         }
       />

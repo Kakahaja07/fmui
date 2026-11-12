@@ -8,6 +8,25 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "0.2.0",
+    date: "2026-11-12",
+    title: "Widget wall and the full catalog",
+    summary:
+      "Forty-six new components: twenty-four inspired by a wall of animated product widgets, and the twenty-two that were coming soon. Every planned component now ships with source and a live demo.",
+    changes: [
+      {
+        type: "added",
+        text: "Twenty new components: Music Player, Route Map, Activity Rings, Portfolio Chart, Focus Timer, Clock Widget, Week Picker, Vertical Slider, Theme Switch, Billing Toggle, Upload Card, Deploy Button, Presence Avatars, Streak Tracker, Battery Levels, Task Checklist, Chat Thread, Quick Search, Like Button, and Rolling Number.",
+      },
+      { type: "added", text: "Shipped four planned components: OTP Input, Color Picker, Toast Stack, and Kanban Board." },
+      {
+        type: "added",
+        text: "Shipped the rest of the plan: Comparison Table, Profile Card, File Card, Tag Input, Date Range Picker, File Dropzone, Password Strength, Range Slider, Rating Input, Hold to Confirm, Skeleton Loader, Text Reveal, Magnetic Button, Status Pulse, Token Counter, Citation Card, Suggestion Chips, Breadcrumb Trail, Sidebar Nav, Bento Grid, Section Nav, and Mega Menu.",
+      },
+      { type: "changed", text: "The planned Kanban Card became a full Kanban Board with drag, keyboard moves, and progress." },
+    ],
+  },
+  {
     version: "0.1.0",
     date: "2026-10-23",
     title: "Initial public preview",
